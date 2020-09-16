@@ -52,8 +52,10 @@ Cartographer_occupancy_grid_node is included in the 'cartographer_ros' package.
 ```nesfr3/1/map``` is ```nav_msgs/OccupancyGrid``` type. We can visualize the SLAM in RViz by adding the topic name ```nesfr3/1/map```. 
 
 ### 2.3. Role
-By receiving the submap_lists through the ```nesfr3/1/submap_list``` topic, this node will generate the global map. 
-<img src = "/Shots/Cartographer1.png" width="300" height="300" align="center">      
+By receiving the submap_lists through the ```nesfr3/1/submap_list``` topic, this node will generate the global map.     
+    
+<img src = "/Shots/Cartographer1.png" width="300" height="300" align="center"></img>    
+
 As you can see from the above image, the global map is not generated accurately, due to poor loop closure. 
 
 * * *
