@@ -64,6 +64,8 @@ It's detail explanation is arranged in [pcl_transfer_node.md](https://github.com
    
 ### 3.6. object3d_detector_(/nesfr3_tracking) (pkg)
 * **object3d_detector**
+object3d_detecter conducts clustering points from lidar. Group of points turns into cuboid by clustering.         
+It also calculate centroid, and min & max value of x,y, z postion and publish it.
 It's detail explanation is arranged in [object3d_detector.md](,"object3d_detector").   
    
 ### 3.7. nesfr3_services (pkg)
@@ -75,10 +77,20 @@ It's detail explanation is arranged in [shot_controller_node.md](https://github.
 
 ## 4. Operation Process
 ### 4.1. Detection
-
+1.
+2.
+3.
 ### 4.2. Matching
-1. 
-2. 
-3. 
+1. Subscribe cbox data(size, dimension, index) and bbox data(size, dimension, index). 
+2. Compare the width (x dimension) between each boxes and filter out the corresponding human bbox. 
+3. Calcuate the blob array's hsv histogram value and check whether the ```hist_list``` is full or not.         
+   Then, append or delete the ```hist``` so that the array size does not exceed the prescribed value(10). 
+4. Check the blob image's hsv histogram value and get the correspondence score.  
+   If the value is not contained in the ```hist_list```, than add new ```tracking_id```. 
+5. 
 
 ### 4.3. Tracking
+1. User ```nesfr3/nesfr3_tracking/object3d_detector/config/object3d_detector.yaml``` modifies the matching algorithm, observation model, noise_params, and etc. to proper values.  
+2. According to those parameters, track the pose, and geograhpical position of the people, and then estimate them.   
+   EKF, UKF, and PF filter can be used.
+3. 
