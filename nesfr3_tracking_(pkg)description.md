@@ -1,11 +1,11 @@
 # nesfr3_node_description
-'Description of cartographer_node, cartographer_occupancy_grid_node, and nesfr3_tracking'
+'Description of cartographer_node, cartographer_occupancy_grid_node, nesfr3_tracking, and bayes_people_tracker'
 This will concretely explain the roles, and the topics that comes in and goes out.
 
 ## 1. Cartographer_node
 Cartographer_node and Cartographer_occupancy_grid_node are the Google open source libraries. Cartographer is a system that provides real-time SLAM in 2D and 3D across multiple platforms and sensor configurations. Anyone can approach to its sources through [cartographer](https://github.com/cartographer-project/cartographer, "ROS_Wiki").  
 
-### 1.1. package
+### 1.1. Package
 Cartographer_node is included in the 'cartographer_ros' package.
 
 ### 1.2. Topics
@@ -36,7 +36,7 @@ reference : [ROS API reference documentation](https://google-cartographer-ros.re
 
 
 ## 2. Cartographer_occupancy_grid_node
-### 2.1. package
+### 2.1. Package
 Cartographer_occupancy_grid_node is included in the 'cartographer_ros' package.
 
 ### 2.2. Topics
@@ -69,7 +69,7 @@ nesfr3_tracking node is for **matching process**. There are several function def
 1. Matching cbox and bbox.
 2. Matching hsv histogram and the actor id.
 ```
-### 3.1. package
+### 3.1. Package
 nesfr3_tracking node is included in the 'nesfr3_tracking' package. 
 
 ### 3.2. Topics
@@ -89,7 +89,7 @@ nesfr3_tracking node is included in the 'nesfr3_tracking' package.
 ```
 ```nesfr3/1/pose_with_cluster``` contains the ```PoseArrayWithClusters.msg``` file. In the message file, we could find the orientation data of the actors ```poses```, and the pointcloud data ```segments```.
     
-### 3.3. Role
+### 3.3. Roles
 The main 4 functions defined in this node are ```onImage(data_bbox, data_cbox, data_cluster)```, ```scoring(cluster_spec, bbox_spec)```, ``` hist_callback(data_img, data_hist, data_state, data_id)``` and ```state_callback(data_img, data_hist, data_state)```.
 Starting from ```onImage()``` function we will discuss about the role of this node.
 
@@ -113,3 +113,32 @@ Starting from ```onImage()``` function we will discuss about the role of this no
 * * *
 reference : [wom-ai/Point Cloud 3d Clustering](https://github.com/wom-ai/nesfr3_workspace/wiki/Point-Cloud-3d-Clustering, "nesfr3_tracking")
 * * *
+
+
+## 4. bayes_people_tracker
+### 4.1. Package
+```bayes_people_tracker``` is contained in the ```bayes_people_tracker``` package. And this package uses the bayes_tracking library developed by Nicola Bellotto (University of Lincoln).
+
+### 4.2. Topics
+* Subscribes
+```
+- nesfr3/1/blobsArray (pcl_transformer_node)
+```
+From ```pcl_transformer_node```, it receives the ```BlobsArray.msg```, and using ```connectCallback()``` and ```detectCallback()``` function it deals with the tracking ids. (I guess)
+
+* Publishes
+```
+- nesfr3/1/people_tracker/people
+- nesfr3/1/histogram
+```
+```bayes_people_tracker``` gathers the each people's position and velocity data and passes to the ```nesfr3_tracking``` as topic name ```nesfr3/1/people_tracker/people```.    
+Also, it publishes another topic name ```nesfr3/1/histogram``` which contains the data of tracking id(blobsArray indexes).    
+
+### 4.3. Role
+This node receives inputs from the user, which ```filter``` they will use and what would be the ```stdlimit``` value, and the constant velocity model noise ```cv_model_noise```. Also you can decide the matching algorithm would be either **NN**(Nearest Neighborhood) or **NNJPDA**(Nearest Neighbor Joint Probabilistic Data Association).    
+Depending on the input filter which we would use, this node tracks the pose, and geograhpical position of the people, and then estimates them.   
+EKF, UKF, and PF filter can be used.    
+
+- This node is runned by executing ```object3d_detector.launch```. And the **all inputs need for running the ```bayes_people_tracker``` was defined in ```nesfr3/nesfr3_tracking/object3d_detector/config/object3d_detector.yaml``` file**. Therefore if you want to change filter type or the model noise value, simply you can **modify the number or the filter type in the yaml file.**   
+   
+- Finally you can customize your own filter to track & estimate the human actor position / pose. 
