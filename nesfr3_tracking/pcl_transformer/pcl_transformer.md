@@ -19,11 +19,11 @@ This message contains orientation data of each actors detected, and point cloud 
 
 **Important functions defined are followed:**
 
-#### dataCallback(const nesfr3_msgs::PoseArrayWithClusters::ConstPtr &clusters_msg, const sensor_msgs::ImageConstPtr &img_msg, ros::Publisher blobs_array_pub_, bool verbose)   
+* **dataCallback(const nesfr3_msgs::PoseArrayWithClusters::ConstPtr &clusters_msg, const sensor_msgs::ImageConstPtr &img_msg, ros::Publisher blobs_array_pub_, bool verbose)   **
 - This function callbacks required messages which are ```clusters_msg```(point cloud clsuter contains actors' orientation) and ```img_msg```(fisheye camera image) and publishes blobsArray message. This message contains poses, tracking_id of each cluster converted into image blob.
 
-#### cart2img
+* **cart2img**
 - 'Image blob' described on the above line is shown on this function. This function calls `xyz2rt2image()` function to convert point cloud cluster into image blob, means rectangular zone has identical center with point cloud. Then it publishes `blobsArray` which is array that contains each blob's center coordinate, width and height.
 
-#### xyz2rt2image
+* **xyz2rt2image**
 - This function calculates coordinate of center point of transformed image blob. Mathematical calculation is included, further analysis is needed for better understanding.
