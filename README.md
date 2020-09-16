@@ -105,10 +105,11 @@ It's detail explanation is arranged in [shot_controller_node.md](https://github.
    Then, append or delete the ```hist``` so that the array size does not exceed the prescribed value(10). 
 4. Check the blob image's hsv histogram value and get the correspondence score.  
    If the value is not contained in the ```hist_list```, than add new ```tracking_id```. 
-5. 
+5. point cloud cluster with pose(orientation) information `nesfr3/1/pose_with_cluster` is published, and then coordinate transformation makes projection of center of each point cloud on the 2-dimensional image.
+6. Information of projected image is published as `blobsArray` message.
 
 ### 4.3. Tracking
 1. User ```nesfr3/nesfr3_tracking/object3d_detector/config/object3d_detector.yaml``` modifies the matching algorithm, observation model, noise_params, and etc. to proper values.  
 2. According to those parameters, track the pose, and geograhpical position of the people, and then estimate them.   
    EKF, UKF, and PF filter can be used.
-3. 
+3. With parameter input(actor's id, desired distance/angle, etc), NESFR3 calculates proper route and linear/angular velocity to follow actor and adjust its camera tilt and pan to look target consistently.
