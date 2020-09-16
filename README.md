@@ -98,6 +98,8 @@ It's detail explanation is arranged in [shot_controller_node.md](https://github.
 1.
 2.
 3.
+Please refer the link.
+https://github.com/seungyoonHan/pipeline
 ### 4.2. Matching
 1. Subscribe cbox data(size, dimension, index) and bbox data(size, dimension, index). 
 2. Compare the width (x dimension) between each boxes and filter out the corresponding human bbox. 
