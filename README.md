@@ -27,14 +27,14 @@ In this section we will discuss only about the main important packages and nodes
 * **Cartographer_occupancy_grid_node**
 Cartographer_node and Cartographer_occupancy_grid_node are the Google open source libraries. Cartographer is a system that provides real-time SLAM in 2D and 3D across multiple platforms and sensor configurations. Anyone can approach to its sources through [cartographer](https://github.com/cartographer-project/cartographer, "ROS_Wiki").  
 
-It's detail explanation is arranged in [cartographer_ros.md](,"cartographer_ros").
+It's detail explanation is arranged in [cartographer_ros.md](https://github.com/HiSeun/nesfr3_pkg_description/blob/master/cartographer_ros/cartograhper_ros.md,"cartographer_ros").
 
 ### 3.2. nesfr3_human_detection (pkg)
 * **image_converter**
 ```image_converter```node subscribes orginal img data from fisheye camera and publish inference results creating child thread.    
 Inference is done by TensorRT optimized SSD in child thread while main thread drawing detection results and displaying video.   
 
-It's detail is arranged in [nesfr3_human_detection.md](, "image_converter node").
+It's detail is arranged in [nesfr3_human_detection.md](https://github.com/HiSeun/nesfr3_pkg_description/blob/master/nesfr3_human_detection/nesfr3_human_detection.md, "image_converter node").
 
 ### 3.3. nesfr3_tracking (pkg)
 The ```nesfr3_tracking``` node is not contained in sub packages, but directly in nesfr3_tracking packages.
