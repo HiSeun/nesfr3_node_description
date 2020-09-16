@@ -114,6 +114,99 @@ Starting from ```onImage()``` function we will discuss about the role of this no
 reference : [wom-ai/Point Cloud 3d Clustering](https://github.com/wom-ai/nesfr3_workspace/wiki/Point-Cloud-3d-Clustering, "nesfr3_tracking")
 * * *
 
+* * *
+
+## shot_controller_node
+
+### package : nesfr3_services
+
+### how it works
+
+shot_controller_node makes nesfr3 enable to track & film certain actor. It requests id of the actor, id of the robot, desired distance & angle between robot and actor, shot size and use_gt(). If use_gt is 1, nesfr3 follows human based on ground truth position of human.
+
+Important functions defined in this node are followed:
+
+#### ShotController(uint32_t robot_id)
+ - advertise `("shot_cmd", &shotcontroller::Follow, this)` to make robot follow the actor.
+
+#### Follow(Followactor::request &req, followactor::response &res)
+
+It requests parameter and topic messages required.
+In more specific way, this function subscribes actor id and wheel odometry information and then publishes linear/angular velocity and camera tilt/pan.
+
+Parameter requested are:
+
+ `req.actor_id`
+ `req.robot_id`
+ `req.distance`
+ `req.angle`
+ `req.shot_size`
+ `req.use_gt`
+
+Topic subscribed are:
+ `nesfr3/robot_id/Actors`(if `use_gt` =/= 1)
+ `gazebo/Actor/1`(if `use_gt` == 1)
+ `nesfr3/1/new_id`
+ `nesfr3/1/wheel_odom`
+
+And this node publishes:
+ `nesfr3/1/gimbal/cmd_pos(geometry_msgs::twist)`
+ `nesfr3/1/main_camera/set_hfov(std_msgs::Float64)`
+ `nesfr3/1/state(std_msgs::Int32)`
+ `nesfr3/1/id(std_msgs::Int32)`
+
+#### NewIdCallback(std_msgs::Int32::ConstPtr &msg)
+
+This function callbacks id of the robot? actor? by `this->actor_id = uint32_t(msg->data)`
+
+#### ActorCallback(nesfr3_msgs::Actor::ConstPtr &msg)
+
+This function gets message of position and orientation of the certain actor(when tracking occurs on the ground truth position of human). And then publishes `cmd_vel` and `cmd_hfov` which refers to robot's angular/linear velocity and camera tilt/pan.
+NESFR3 tracks actor with some desired parameters : distance, angle and velocity(to be done), and this function includes how to track actor in efficient way.
+If NESFR3 and robot is far away, this function finds a shortest arc route heads for desired position. And then when distance is short enough, robot maintains its velocity and continuously follows target actor.
+
+
+#### ActorsCallback
+This function activates when `use_gt()` isn't equal to 1. It seems to act similar way compared to ActorCallback, but not analyzed yet enough.
+
+#### OdomCallback
+This functinon gets robot's current position and orientation information with odometry message received.
+
+#### GetYaw(double x, y, z, w)
+This function gets yaw value of the certain actor, by get quaternion value of the orientation and transfer it into roll, pitch and yaw.
+
+* * *
+
+## pcl_transformer_node
+
+ - package : nesfr3_tracking
+
+ - topic subscribes/publishes
+
+subscribes
+ - `nesfr3/1/fisheye_camera/image_raw/image_topics`(/gazebo)
+ - `nesfr3/1/pose_with_cluster`(nesfr3_tracking)
+
+publishes
+ - `nesfr3/1/blobsarray`(/nesfr3/1/bayes_people_tracker)
+
+ - how it works
+ 
+This node gets image from fisheye_camera and pose_with_cluster message from nesfr3_tracking. This message contains orientation data of each actors detected, and point cloud cluster information, and then this node projects point cloud information into the camera image, by coordinate transition from 3-dimensional cartesian coordinate to polar coordinate and 2-dimensional cartesian coordinate on the image.
+
+Important functions defined are followed:
+
+#### dataCallback(const nesfr3_msgs::PoseArrayWithClusters::ConstPtr &clusters_msg, const sensor_msgs::ImageConstPtr &img_msg, ros::Publisher blobs_array_pub_, bool verbose)
+
+This function callbacks required messages which are `clusters_msg`(point cloud clsuter contains actors' orientation) and `img_msg`(fisheye camera image) and publishes blobsArray message. This message contains poses, tracking_id of each cluster converted into image blob.
+
+#### cart2img
+
+'Image blob' described on the above line is shown on this function. This function calls `xyz2rt2image()` function to convert point cloud cluster into image blob, means rectangular zone has identical center with point cloud. Then it publishes `blobsArray` which is array that contains each blob's center coordinate, width and height.
+
+#### xyz2rt2image
+
+This function calculates coordinate of center point of transformed image blob. Mathematical calculation is included, further analysis is needed for better understanding.
 
 ## 4. bayes_people_tracker
 ### 4.1. Package
