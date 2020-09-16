@@ -84,7 +84,7 @@ It's detail explanation is arranged in [pcl_transfer_node.md](https://github.com
 * **object3d_detector**
 object3d_detecter conducts clustering points from lidar. Group of points turns into cuboid by clustering.         
 It also calculate centroid, and min & max value of x,y, z postion and publish it.
-It's detail explanation is arranged in [object3d_detector.md](,"object3d_detector").   
+It's detail explanation is arranged in [object3d_detector.md](https://github.com/HiSeun/nesfr3_pkg_description/blob/master/nesfr3_human_detection/nesfr3_human_detection.md "object3d_detector").   
    
 ### 3.7. nesfr3_services (pkg)
 * **shot_controller_node**
