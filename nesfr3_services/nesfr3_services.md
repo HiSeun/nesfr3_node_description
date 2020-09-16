@@ -1,5 +1,4 @@
-# Package : nesfr3_services
-
+# nesfr3_services package
 ## 1. shot_controller_node
 ### 1.1. Topics
 **Follow(Followactor::request &req, followactor::response &res)**
@@ -32,7 +31,7 @@ In more specific way, this function subscribes actor id and wheel odometry infor
 ### 1.2. Roles
 * how it works
 
-shot_controller_node makes nesfr3 enable to track & film certain actor. It requests id of the actor, id of the robot, desired distance & angle between robot and actor, shot size and use_gt(). If use_gt is 1, nesfr3 follows human based on ground truth position of human.
+```shot_controller_node``` makes nesfr3 enable to track & film certain actor. It requests id of the actor, id of the robot, desired distance & angle between robot and actor, shot size and use_gt(). If use_gt is 1, nesfr3 follows human based on ground truth position of human.
 
 Important functions defined in this node are followed:
 
