@@ -53,7 +53,7 @@ Cartographer_occupancy_grid_node is included in the 'cartographer_ros' package.
 
 ### 2.3. Role
 By receiving the submap_lists through the ```nesfr3/1/submap_list``` topic, this node will generate the global map. 
-<center><img src = "/Shots/Cartographer1.png" width="300" height="300"></center>      
+<img src = "/Shots/Cartographer1.png" width="300" height="300" align="center">      
 As you can see from the above image, the global map is not generated accurately, due to poor loop closure. 
 
 * * *
