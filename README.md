@@ -4,25 +4,25 @@ This document was made for arranging our overall concepts about nesfr3. We will 
 
 ## 1. Nesfr3 model composition
 ### 1.1. Sensors
-* LiDAR (Ouster Lidar)
+* **LiDAR (Ouster Lidar)**   
 This ouster lidar is used for gathering point cloud information for clustering them and compare with human detection output in fisheye camera.     
 On the gazebo simulation environment, lidar message is received as `/nesfr3/1/lidar/points`.    
 
-* Fisheye Camera  
-This camera produces 2d images of 360 degree, which has resolution of 4400*1100.          
+* **Fisheye Camera**    
+This camera produces 2d images of 360 degree, which has resolution of 4400*1100.            
 On the gazebo simulation environment, fisheye camera message is received as `/nesfr3/1/fisheye_camera/image_raw/image_topics`.      
-- (please add model name of the fisheye camera!)
+    - (please add model name of the fisheye camera!)
  
-* Main Camera
+* **Main Camera**    
 This is main camera(BFS-U3-70S7C), which has resolution of 7.10 megapixels(3,208*2,200) and 51 fps.     
 Please refer [FLIR Blackfly® BFS-U3-70S7C-C USB 3.1](https://www.edmundoptics.co.kr/p/BFS-U3-70S7C-C-USB3-BlackflyR-S-Color-Camera/41900) for further specifications.
 
-* Encoder
+* **Encoder**    
 Encoder on the wheel axis gives wheel odometry information for estimation of current NESFR3 position, via topic `nesfr3/1/wheel_odom` from `/gazebo` to the `/nesfr3/cartographer_node`.     
 **On the gazebo simulation environment, ouster lidar is located 80cm from the ground while fisheye camera is located 25cm from the ground.**
  
  
-### 1.2. Controllers
+### 1.2. Controllers    
 * Joystick controller(not equipped yet)      
 With `joy_node`, which is ROS driver for generic Linux joystick, this controller publishes `/joy` message to the NESFR3 for teleoperation.      
 With this message, `nesfr_teleop_node` receives lidar point message and wheel odometry message so publish linear/angular velocity and camera tilt/pan to track the target actor.       
