@@ -33,7 +33,7 @@ Nvidia Xavier is computer expected to be equipped on the NESFR3, which enables g
 Please refer [Jetson AGX Xavier Developer Kit](https://developer.nvidia.com/embedded/jetson-agx-xavier-developer-kit) for further specifications.
 
 ## 2. Structural Diagram
-<img src = "/Shots/StructureDiagram.png" width="300" height="300" align="center"></img>    
+<img src = "/Shots/StructureDiagram.PNG" width="300" height="300" align="center"></img>    
 Above figure shows the overall structural diagram of the nesfr3_workspace. ```nesfr3_gazebo``` visualizes the gazebo, RViz, and it also executes Google ```Cartographer_ROS```.          
 Other customed messages used in the nesfr3_workspace are in ```nesfr3_msgs```.              
 (*Other ```sensor_msgs```, ```geometry_msgs``` and etc. are not include in this diagram.)
