@@ -1,7 +1,3 @@
-# nesfr3_node_description
-'Description of cartographer_node, cartographer_occupancy_grid_node, nesfr3_tracking, and bayes_people_tracker'
-This will concretely explain the roles, and the topics that comes in and goes out.
-
 # nesfr3_tracking package
 This nesfr3_tracking node is not contained in sub packages, but directly in nesfr3_tracking packages.
 
