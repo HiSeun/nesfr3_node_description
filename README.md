@@ -23,12 +23,12 @@ Encoder on the wheel axis gives wheel odometry information for estimation of cur
  
  
 ### 1.2. Controllers    
-* Joystick controller(not equipped yet)      
+* **Joystick controller(not equipped yet)**                   
 With `joy_node`, which is ROS driver for generic Linux joystick, this controller publishes `/joy` message to the NESFR3 for teleoperation.      
 With this message, `nesfr_teleop_node` receives lidar point message and wheel odometry message so publish linear/angular velocity and camera tilt/pan to track the target actor.       
 
 ### 1.3. Computer
-* Nvidia Xavier
+* **Nvidia Xavier**                 
 Nvidia Xavier is computer expected to be equipped on the NESFR3, which enables gpu-based computation within the robot.     
 Please refer [Jetson AGX Xavier Developer Kit](https://developer.nvidia.com/embedded/jetson-agx-xavier-developer-kit) for further specifications.
 
