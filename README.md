@@ -50,45 +50,45 @@ Cartographer_node and Cartographer_occupancy_grid_node are the Google open sourc
 It's detail explanation is arranged in [cartographer_ros.md](https://github.com/HiSeun/nesfr3_pkg_description/blob/master/cartographer_ros/cartograhper_ros.md "cartographer_ros").
 
 ### 3.2. nesfr3_human_detection (pkg)
-* **image_converter**
+* **image_converter**           
 ```image_converter```node subscribes orginal img data from fisheye camera and publish inference results creating child thread.    
 Inference is done by TensorRT optimized SSD in child thread while main thread drawing detection results and displaying video.   
 
 It's detail is arranged in [nesfr3_human_detection.md](https://github.com/HiSeun/nesfr3_pkg_description/blob/master/nesfr3_human_detection/nesfr3_human_detection.md "image_converter node").
 
-### 3.3. nesfr3_tracking (pkg)
+### 3.3. object3d_detector_(/nesfr3_tracking) (pkg)         
+* **object3d_detector**         
+object3d_detecter conducts clustering points from lidar. Group of points turns into cuboid by clustering.         
+It also calculate centroid, and min & max value of x,y, z postion and publish it.
+It's detail explanation is arranged in [object3d_detector.md](https://github.com/HiSeun/nesfr3_pkg_description/blob/master/nesfr3_tracking/object3d_detector/object3d_detector.md "object3d_detector").   
+
+### 3.4. pcl_transformer_(/nesfr3_tracking) (pkg)           
+* **pcl_transfer_node**             
+This node gets image from fisheye_camera and pose_with_cluster message from nesfr3_tracking.       
+This message contains orientation data of each actors detected, and point cloud cluster information, and then this node projects point cloud information into the camera image, by coordinate transition from 3-dimensional cartesian coordinate to polar coordinate and 2-dimensional cartesian coordinate on the image.      
+                
+It's detail explanation is arranged in [pcl_transfer_node.md](https://github.com/HiSeun/nesfr3_pkg_description/blob/master/nesfr3_tracking/pcl_transformer/pcl_transformer.md "pcl_transfer_node").       
+            
+### 3.5. nesfr3_tracking (pkg)          
 The ```nesfr3_tracking``` node is not contained in sub packages, but directly in nesfr3_tracking packages.
-* **nesfr3_tracking**
+* **nesfr3_tracking**           
 nesfr3_tracking node is for **matching process**. There are several function defined in this ```nesfr3_human_matching.py```. Considering these functions, we can define that the two main job for this node are
 ```
 1. Matching cbox and bbox.
 2. Matching hsv histogram and the actor id.
-```
-
-It's detail explanation is arranged in [nesfr3_tracking.md](https://github.com/HiSeun/nesfr3_pkg_description/blob/master/nesfr3_tracking/nesfr3_tracking.md "nesfr3_tracking").
-
-### 3.4. bayes_people_tracker_(/nesfr3_tracking) (pkg)
-* **people_tracker**
+```             
+            
+It's detail explanation is arranged in [nesfr3_tracking.md](https://github.com/HiSeun/nesfr3_pkg_description/blob/master/nesfr3_tracking/nesfr3_tracking.md "nesfr3_tracking").         
+            
+### 3.6. bayes_people_tracker_(/nesfr3_tracking) (pkg)
+* **people_tracker**            
 This node receives inputs from the user, which ```filter``` they will use and what would be the ```stdlimit``` value, and the constant velocity model noise ```cv_model_noise```. Also you can decide the matching algorithm would be either **NN**(Nearest Neighborhood) or **NNJPDA**(Nearest Neighbor Joint Probabilistic Data Association).    
 Depending on the input filter which we would use, this node tracks the pose, and geograhpical position of the people, and then estimates them.   
 EKF, UKF, and PF filter can be used.       
    
 It's detail explanation is arranged in [people_tracker.md](https://github.com/HiSeun/nesfr3_pkg_description/blob/master/nesfr3_tracking/bayes_people_tracker/bayes_people_tracker.md "people_tracker").   
 
-### 3.5. pcl_transformer_(/nesfr3_tracking) (pkg)
-* **pcl_transfer_node** 
-This node gets image from fisheye_camera and pose_with_cluster message from nesfr3_tracking.       
-This message contains orientation data of each actors detected, and point cloud cluster information, and then this node projects point cloud information into the camera image, by coordinate transition from 3-dimensional cartesian coordinate to polar coordinate and 2-dimensional cartesian coordinate on the image.      
-      
-It's detail explanation is arranged in [pcl_transfer_node.md](https://github.com/HiSeun/nesfr3_pkg_description/blob/master/nesfr3_tracking/pcl_transformer/pcl_transformer.md "pcl_transfer_node").       
-   
-### 3.6. object3d_detector_(/nesfr3_tracking) (pkg)
-* **object3d_detector**
-object3d_detecter conducts clustering points from lidar. Group of points turns into cuboid by clustering.         
-It also calculate centroid, and min & max value of x,y, z postion and publish it.
-It's detail explanation is arranged in [object3d_detector.md](https://github.com/HiSeun/nesfr3_pkg_description/blob/master/nesfr3_tracking/object3d_detector/object3d_detector.md "object3d_detector").   
-   
-### 3.7. nesfr3_services (pkg)
+## 3.7. nesfr3_services (pkg)
 * **shot_controller_node**
 ```shot_controller_node``` makes nesfr3 enable to track & film certain actor. It requests id of the actor, id of the robot, desired distance & angle between robot and actor, shot size and use_gt(). If use_gt is 1, nesfr3 follows human based on ground truth position of human.    
 
@@ -102,6 +102,7 @@ It's detail explanation is arranged in [shot_controller_node.md](https://github.
 3. 
 Please refer the link.
 https://github.com/seungyoonHan/pipeline
+            
 ### 4.2. Matching
 1. Subscribe cbox data(size, dimension, index) and bbox data(size, dimension, index). 
 2. Compare the width (x dimension) between each boxes and filter out the corresponding human bbox. 
