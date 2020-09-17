@@ -89,7 +89,7 @@ EKF, UKF, and PF filter can be used.
 It's detail explanation is arranged in [people_tracker.md](https://github.com/HiSeun/nesfr3_pkg_description/blob/master/nesfr3_tracking/bayes_people_tracker/bayes_people_tracker.md "people_tracker").   
 
 ## 3.7. nesfr3_services (pkg)
-* **shot_controller_node**
+* **shot_controller_node**              
 ```shot_controller_node``` makes nesfr3 enable to track & film certain actor. It requests id of the actor, id of the robot, desired distance & angle between robot and actor, shot size and use_gt(). If use_gt is 1, nesfr3 follows human based on ground truth position of human.    
 
 It's detail explanation is arranged in [shot_controller_node.md](https://github.com/HiSeun/nesfr3_pkg_description/blob/master/nesfr3_services/nesfr3_services.md "shotcontroller_node").
